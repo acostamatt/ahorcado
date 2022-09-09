@@ -1,32 +1,53 @@
 import os
 from secrets import choice
 from time import sleep
-from funciones_ahorcado import ahorcar, mostrar_estado, separador, faltantes
+from funciones_ahorcado import ahorcar, mostrar_estado, select_top5_ptajes, separador, faltantes
 
 os.system('clear')
 print('\nBIENVENIDOS AL AHORCADO')
+archivo_usuarios = open('usuarios.txt', 'a')
+archivo_usuarios.close
 
+archivo_usuarios = open('usuarios.txt', 'r')
+while True:
+    usuario = input('\nIngrese su nombre de usuario:')
+    if usuario.isdigit() is True:
+        print('\nSu nombre de usuario debe constar de letras y números.')
+        continue    
+    elif usuario + '\n' in archivo_usuarios.readlines():
+        archivo_usuarios.seek(0)
+        print('\nYa se encuentra registrado ese usuario. Intente con otro nombre.')
+        continue
+    else:
+        break
+archivo_usuarios.close
+os.system('clear')
+
+archivo_usuarios = open('usuarios.txt', 'a')
+archivo_usuarios.write(usuario + '\n')
 palabras = open('spanish.lst', 'r')
-sleep(2)
+
+print('Usuario registrado correctamente.')
+sleep(3)
+os.system('clear')
+
 while True:
     dificultad = input('\nSeleccione la dificultad deseada:\nFacil: F\nNormal: N\nDificil: D\n\nEscriba aqui la letra que corresponda con su dificultad:  ').strip()
-
-    palabras_para_adivinar = []
-    
+    palabras_para_adivinar = []    
     if dificultad.upper() == 'F':
         print('Ha seleccionado el modo Facil.')
         puntaje = 100
-        palabras_para_adivinar = separador(palabras.readlines(), 1, 8)
+        palabras_para_adivinar = separador(palabras, 1, 8)
         break
     elif dificultad.upper() == 'N':
         print('Ha seleccionado el modo Normal.')
         puntaje = 200
-        palabras_para_adivinar = separador(palabras.readlines(), 7, 15)
+        palabras_para_adivinar = separador(palabras, 7, 15)
         break
     elif dificultad.upper() == 'D':
         print('Ha seleccionado el modo Dificil.')        
         puntaje = 300
-        palabras_para_adivinar = separador(palabras.readlines(), 14, 22)
+        palabras_para_adivinar = separador(palabras, 14, 22)
         break
     else:
         print('Su seleccion es invalida, intente de nuevo.')
@@ -55,12 +76,10 @@ while True:
             os.system('clear')
             if len(letra) != 1 or letra.isnumeric():
                 print("Eso no es una letra. Intenta con una sola letra.\n")
-                break
-            
-            if letra in letras_adivinadas or letra in letras_erradas:
-                print('Ya intentaste con esa letra.\n')
-                break
-            
+                break            
+            elif letra in letras_adivinadas or letra in letras_erradas:
+                print('\nYa intentaste con esa letra.\n')
+                break            
             else:
                 if letra in palabra_a_adivinar:
                     print('\nFelicitaciones ha adivinado una letra.')
@@ -68,7 +87,7 @@ while True:
                     break
                 else:
                     vidas -= 1
-                    pts_por_esta_palabra -= puntaje/5
+                    pts_por_esta_palabra -= int(puntaje/5)
                     letras_erradas.append(letra)
                     print('\nLa letra es incorrecta.')
                     break
@@ -77,15 +96,15 @@ while True:
         if vidas == 0:
             perdiste += 1
             print(ahorcado)
+            sleep(3)
+            os.system('clear')
             print('    GAME OVER\nLa palabra era:', palabra_a_adivinar)
             break
         
-
         estatus_actual = mostrar_estado(palabra_a_adivinar, letras_adivinadas)  
         letras_faltantes = faltantes(palabra_a_adivinar, letras_adivinadas)
         
         print('Le quedan', vidas, 'vidas.\n' + ahorcado, '\n', estatus_actual)
-        
         
         if letras_faltantes == 0:
             print('\nFelicidades haz ganado')
@@ -97,4 +116,19 @@ while True:
 
     if perdiste == 1:
             print('Su puntaje fue:', puntaje_total)
-            break    
+            break
+
+archivo_pts = open('puntajes.txt', 'a')
+archivo_pts.write(str(puntaje_total) + '\n')
+archivo_pts.close
+
+archivo_usuarios = open('usuarios.txt', 'r')
+archivo_pts = open('puntajes.txt', 'r')
+print('\n' + '-'*30)
+print('Top 5 mejores puntajes')
+print('-'*30)
+for nombre_usuario, puntaje in select_top5_ptajes(archivo_usuarios, archivo_pts).items():
+        print(str(nombre_usuario).rstrip('\n') + ' '*(20-len(nombre_usuario)) + ': ' + str(puntaje).rstrip('\n'))
+        print('-'*30)
+archivo_pts.close
+archivo_usuarios.close

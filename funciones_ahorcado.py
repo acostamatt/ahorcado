@@ -40,3 +40,17 @@ def ahorcar(vidas):
     elif vidas == 0:
         ahorcado = vida_4 + vida_3 + vida_1 + vida_0    
     return ahorcado
+
+def select_top5_ptajes(usuarios, puntajes):
+    dic_usuarios = {}
+    for nombre_usuario, puntaje in zip(usuarios, puntajes):
+        dic_usuarios[nombre_usuario] = int(puntaje.rstrip('\n'))
+    puntajes_ordenados = sorted(dic_usuarios.values(), reverse=True)
+    dic_top5 = {}
+    for numero in puntajes_ordenados[0:5]:
+        for nombre_usuario, puntaje in dic_usuarios.items():    
+            if puntaje == numero:
+                dic_top5[str(nombre_usuario).rstrip('\n')] = puntaje
+            if len(dic_top5) == 5:
+                break
+    return dic_top5

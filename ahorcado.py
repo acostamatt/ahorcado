@@ -98,28 +98,28 @@ while True:
             print(ahorcado)
             sleep(3)
             os.system('clear')
-            print('    GAME OVER\nLa palabra era:', palabra_a_adivinar)
+            print(f'    GAME OVER\nLa palabra era: {palabra_a_adivinar}')
             break
         
         estatus_actual = mostrar_estado(palabra_a_adivinar, letras_adivinadas)  
         letras_faltantes = faltantes(palabra_a_adivinar, letras_adivinadas)
         
-        print('Le quedan', vidas, 'vidas.\n' + ahorcado, '\n', estatus_actual)
+        print(f'Le quedan {vidas} vidas.\n{ahorcado}\n{estatus_actual}')
         
         if letras_faltantes == 0:
+            os.system('clear')
             print('\nFelicidades haz ganado')
             print('La palabra es: ' + palabra_a_adivinar)
-            
             puntaje_total += pts_por_esta_palabra
-            print('Obtuvo:', pts_por_esta_palabra, 'pts.', '| Puntos acumulados:', puntaje_total, '\n\n')        
+            print(f'Obtuvo: {pts_por_esta_palabra} pts. | Puntos acumulados: {puntaje_total} \n\n')        
             break
 
     if perdiste == 1:
-            print('Su puntaje fue:', puntaje_total)
+            print(f'Su puntaje fue: {puntaje_total}')
             break
 
 archivo_pts = open('puntajes.txt', 'a')
-archivo_pts.write(str(puntaje_total) + '\n')
+archivo_pts.write(f'{puntaje_total}\n')
 archivo_pts.close
 
 archivo_usuarios = open('usuarios.txt', 'r')

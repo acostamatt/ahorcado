@@ -54,3 +54,14 @@ def select_top5_ptajes(usuarios, puntajes):
             if len(dic_top5) == 5:
                 break
     return dic_top5
+
+def saltear_lineas_hasta_L7(condicion):
+    if condicion == 5:
+        retorno = 3
+    elif condicion == 4:
+        retorno = 2
+    elif condicion == 3:
+        retorno = 1
+    else:
+        retorno = 0
+    return retorno

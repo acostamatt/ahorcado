@@ -1,7 +1,7 @@
 import os
 from secrets import choice
 from time import sleep
-from funciones_ahorcado import ahorcar, mostrar_estado, select_top5_ptajes, separador, faltantes
+from funciones_ahorcado import ahorcar, mostrar_estado, saltear_lineas_hasta_L7, select_top5_ptajes, separador, faltantes
 
 os.system('clear')
 print('\nBIENVENIDOS AL AHORCADO')
@@ -10,7 +10,7 @@ archivo_usuarios.close
 
 archivo_usuarios = open('usuarios.txt', 'r')
 while True:
-    usuario = input('\nIngrese su nombre de usuario:')
+    usuario = input('\nIngrese su nombre de usuario:').strip()
     if usuario.isdigit() is True:
         print('\nSu nombre de usuario debe constar de letras y números.')
         continue    
@@ -51,7 +51,6 @@ while True:
         break
     else:
         print('Su seleccion es invalida, intente de nuevo.')
-
 palabras.close()
 
 print('\nAguarde mientras seleccionamos su palabra.')
@@ -68,17 +67,17 @@ while True:
     letras_erradas = []
     ahorcado = ''
     
-    print('_ ' * len(palabra_a_adivinar), 'Su palabra mide:', len(palabra_a_adivinar)) 
+    print('\n'*7 , '_ ' * len(palabra_a_adivinar), 'Su palabra mide:', len(palabra_a_adivinar)) 
     
     while True:
         while True:
-            letra = input("\nAdivina una letra: ").lower()
+            letra = input('\nAdivina una letra: ').lower()
             os.system('clear')
             if len(letra) != 1 or letra.isnumeric():
-                print("Eso no es una letra. Intenta con una sola letra.\n")
+                print('\nEso no es una letra. Intenta con una sola letra.')
                 break            
             elif letra in letras_adivinadas or letra in letras_erradas:
-                print('\nYa intentaste con esa letra.\n')
+                print('Ya intentaste con esa letra.\n')
                 break            
             else:
                 if letra in palabra_a_adivinar:
@@ -104,7 +103,8 @@ while True:
         estatus_actual = mostrar_estado(palabra_a_adivinar, letras_adivinadas)  
         letras_faltantes = faltantes(palabra_a_adivinar, letras_adivinadas)
         
-        print(f'Le quedan {vidas} vidas.\n{ahorcado}\n{estatus_actual}')
+        print(f'Le quedan {vidas} vidas.\n{ahorcado}')
+        print('\n'*saltear_lineas_hasta_L7(vidas) + estatus_actual)
         
         if letras_faltantes == 0:
             os.system('clear')

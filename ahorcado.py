@@ -2,7 +2,7 @@ import os
 from secrets import choice
 from time import sleep
 from colorama import Fore, init
-
+from funciones_ahorcado import saltear_lineas_hasta_L7, select_top5_ptajes, separador, ahorcar, mostrar_estado, faltantes
 os.system('clear')
 print('\nBIENVENIDOS AL AHORCADO')
 archivo_usuarios = open('usuarios.txt', 'a')
@@ -40,7 +40,7 @@ while True:
     if dificultad.upper() == 'F':
         print('Ha seleccionado el modo Facil.')
         puntaje = 100
-        palabras_para_adivinar = separador(palabras, 1, 8)
+        palabras_para_adivinar = separador(palabras, 14, 22)
         break
     elif dificultad.upper() == 'N':
         print('Ha seleccionado el modo Normal.')
@@ -50,7 +50,7 @@ while True:
     elif dificultad.upper() == 'D':
         print('Ha seleccionado el modo Dificil.')        
         puntaje = 300
-        palabras_para_adivinar = separador(palabras, 14, 22)
+        palabras_para_adivinar = separador(palabras, 1, 8)
         break
     else:
         print('Su seleccion es invalida, intente de nuevo.')
@@ -76,7 +76,7 @@ while True:
         while True:
             letra = input('\nAdivina una letra: ').lower()
             os.system('clear')
-            if len(letra) != 1 or letra.isnumeric():
+            if len(letra) != 1 or not letra.isalpha():
                 print('\nEso no es una letra. Intenta con una sola letra.')
                 break            
             elif letra in letras_adivinadas or letra in letras_erradas:

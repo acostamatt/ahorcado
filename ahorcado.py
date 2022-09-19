@@ -1,7 +1,7 @@
 import os
 from secrets import choice
 from time import sleep
-from funciones_ahorcado import ahorcar, mostrar_estado, saltear_lineas_hasta_L7, select_top5_ptajes, separador, faltantes
+from colorama import Fore, init
 
 os.system('clear')
 print('\nBIENVENIDOS AL AHORCADO')
@@ -27,12 +27,15 @@ archivo_usuarios = open('usuarios.txt', 'a')
 archivo_usuarios.write(usuario + '\n')
 palabras = open('spanish.lst', 'r')
 
+#Inicializo la función init de colorama, para añadir color a los textos referidos a la dificultad.
+init()
+
 print('Usuario registrado correctamente.')
 sleep(3)
 os.system('clear')
 
 while True:
-    dificultad = input('\nSeleccione la dificultad deseada:\nFacil: F\nNormal: N\nDificil: D\n\nEscriba aqui la letra que corresponda con su dificultad:  ').strip()
+    dificultad = input('\nSeleccione la dificultad deseada:\n'+Fore.GREEN+'Facil: F\n'+Fore.BLUE+'Normal: N\n'+Fore.RED+'Dificil: D\n\n'+Fore.WHITE+'Escriba aqui la letra que corresponda con su dificultad:  ').strip()
     palabras_para_adivinar = []    
     if dificultad.upper() == 'F':
         print('Ha seleccionado el modo Facil.')

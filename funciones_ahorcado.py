@@ -65,3 +65,52 @@ def saltear_lineas_hasta_L7(condicion):
     else:
         retorno = 0
     return retorno
+
+def validar_usuario(usuario, usuarios_en_sistema):
+    global mensaje
+    if str(usuario).isdigit() is True:
+        mensaje = '\nSu nombre de usuario debe constar de letras y opcionalmente números.'    
+    elif usuario + '\n' in usuarios_en_sistema:
+        mensaje = '\nYa se encuentra registrado ese usuario. Intente con otro nombre.'
+    elif usuario is '':
+        mensaje = '\nDebe ingresar un nombre de usuario.'
+    else:
+        mensaje = ''
+    return mensaje
+
+def select_dificultad(dificultad, palabras):
+    global palabras_para_adivinar    
+    global mensaje
+    if str(dificultad).upper() == 'F':
+        mensaje = 'Ha seleccionado el modo Facil.'
+        palabras_para_adivinar = separador(palabras, 14, 22)
+    elif str(dificultad).upper() == 'N':
+        mensaje = 'Ha seleccionado el modo Normal.'
+        palabras_para_adivinar = separador(palabras, 7, 15)
+    elif str(dificultad).upper() == 'D':
+        mensaje = 'Ha seleccionado el modo Dificil.'        
+        palabras_para_adivinar = separador(palabras, 1, 8)
+    else:
+        mensaje = 'Su seleccion es invalida, intente de nuevo.'
+        palabras_para_adivinar = []
+    return palabras_para_adivinar, mensaje
+
+def select_puntaje(dificultad):
+    if str(dificultad).upper() == 'F':
+        puntaje = 100
+    elif str(dificultad).upper() == 'N':
+        puntaje = 200
+    elif str(dificultad).upper() == 'D':
+        puntaje = 300
+    else:
+        puntaje = 0
+    return puntaje
+
+def validar_letra(letra, letras_adivinadas, letras_erradas):
+    if len(letra) != 1 or not letra.isalpha():
+        mensaje = '\nEso no es una letra. Intenta con una sola letra.'            
+    elif letra in letras_adivinadas or letra in letras_erradas:
+        mensaje = '\nYa intentaste con esa letra.'
+    else:
+        mensaje = ''
+    return mensaje

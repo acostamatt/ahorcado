@@ -22,23 +22,45 @@ def faltantes(palabra, letras_adivinadas):
     return letras_faltantes
 
 def ahorcar(vidas):
-    vida_4 = '|---¿\n'
-    vida_3 = '|   O\n'
-    vida_2 = '|   |\n'
-    vida_1 = '| --|--\n'
-    vida_0 = '|  J L\n'
+    vida_4 = '┏━━━┓\n┃   ┼\n┃\n┃\n┃\n┃\n┃\n┃\n┗━━━━━━━'
+    vida_3 = '┃  ┏┷┓'
+    vida3_ = '┃  ┗┳┛'
+    vida_2 = '┃   ┃'
+    vida_1 = '┃ ━━╋━━'
+    vida_0 = '┃  ┏┻┓'
+    vida0_ = '┃  ┛ ┗'
+    lista_lineas = vida_4.split('\n')
+    global ahorcado
     if vidas == 5:
-        ahorcado = ''
+        ahorcado = vida_4
     if vidas == 4:
-        ahorcado = vida_4        
+        lista_lineas[2] = vida_3
+        lista_lineas[3] = vida3_
+        ahorcado = '\n'.join(lista_lineas)
     if vidas == 3:
-        ahorcado = vida_4 + vida_3        
+        lista_lineas[2] = vida_3
+        lista_lineas[3] = vida3_
+        lista_lineas[4] = vida_2
+        ahorcado = '\n'.join(lista_lineas)
     elif vidas == 2:
-        ahorcado = vida_4 + vida_3 + vida_2            
+        lista_lineas[2] = vida_3
+        lista_lineas[3] = vida3_
+        lista_lineas[4] = vida_1
+        ahorcado = '\n'.join(lista_lineas)            
     elif vidas == 1:
-        ahorcado = vida_4 + vida_3 + vida_1       
+        lista_lineas[2] = vida_3
+        lista_lineas[3] = vida3_
+        lista_lineas[4] = vida_1
+        lista_lineas[5] = vida_0
+        ahorcado = '\n'.join(lista_lineas)
     elif vidas == 0:
-        ahorcado = vida_4 + vida_3 + vida_1 + vida_0    
+        ahorcado = vida_4
+        lista_lineas[2] = vida_3
+        lista_lineas[3] = vida3_
+        lista_lineas[4] = vida_1
+        lista_lineas[5] = vida_0
+        lista_lineas[6] = vida0_
+        ahorcado = '\n'.join(lista_lineas)
     return ahorcado
 
 def select_top5_ptajes(usuarios, puntajes):
@@ -55,13 +77,9 @@ def select_top5_ptajes(usuarios, puntajes):
                 break
     return dic_top5
 
-def saltear_lineas_hasta_L7(condicion):
+def saltear_lineas_hasta_L12(condicion):
     if condicion == 5:
-        retorno = 3
-    elif condicion == 4:
-        retorno = 2
-    elif condicion == 3:
-        retorno = 1
+        retorno = 8
     else:
         retorno = 0
     return retorno

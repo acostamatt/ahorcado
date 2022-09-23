@@ -3,7 +3,7 @@ from secrets import choice
 from time import sleep
 from pyfiglet import figlet_format
 from colorama import Fore, init
-from funciones_ahorcado import saltear_lineas_hasta_L7, select_dificultad, select_puntaje, select_top5_ptajes, separador, ahorcar, mostrar_estado, faltantes, validar_letra, validar_usuario
+from funciones_ahorcado import saltear_lineas_hasta_L12, select_dificultad, select_puntaje, select_top5_ptajes, separador, ahorcar, mostrar_estado, faltantes, validar_letra, validar_usuario
 #TITULO
 system('clear')
 init()
@@ -51,10 +51,10 @@ while True:
     letras_erradas = []
     ahorcado = ''
     print('Aguarde mientras seleccionamos su palabra.')
-    sleep(5)
+    sleep(2)
     system('clear')
     #SE LE MUESTRA AL USUARIO LA CANTIDAD DE LETRAS DE LA PALABRA
-    print('\n'*7 , '_ ' * len(palabra_a_adivinar), 'Su palabra contiene', len(palabra_a_adivinar), 'letras') 
+    print('\n'*12 , '_ ' * len(palabra_a_adivinar), 'Su palabra contiene', len(palabra_a_adivinar), 'letras') 
     while True:
         #INGRESO Y VALIDACION DE LETRAS 
         while True:
@@ -84,21 +84,23 @@ while True:
             print((mensaje_vidas.replace('quedan', 'queda')).replace('vidas', 'vida'))
         else:
             print(mensaje_vidas)
-        print('\n'*saltear_lineas_hasta_L7(vidas) + ' ' + estatus_actual, 'Su palabra contiene', len(palabra_a_adivinar), 'letras')
+        print(f' {estatus_actual} Su palabra contiene {len(palabra_a_adivinar)} letras')
         #VALIDACION SI EL USUARIO ADIVINO
         if letras_faltantes == 0:
             system('clear')
             print(f'\n{Fore.GREEN}¡Felicidades adivinaste!')
             print('La palabra es: ' + str(palabra_a_adivinar).upper())
             puntaje_total += pts_por_esta_palabra
-            print(f'Obtuvo: {pts_por_esta_palabra} pts. | Puntos acumulados: {puntaje_total}{Fore.RESET}')        
+            print(f'Obtuvo: {pts_por_esta_palabra} pts. | Puntos acumulados: {puntaje_total}{Fore.RESET}')
+            sleep(4)
+            system('clear')
             break
         #VALIDACION DE VIDAS
         if vidas == 0:
             system('clear')
             perdiste += 1
             print(ahorcado)
-            sleep(4)
+            sleep(5)
             system('clear')
             print(f'{Fore.RED}{figlet_format("GAME   OVER")}{Fore.WHITE} \nLa palabra era: {str(palabra_a_adivinar).upper()}')
             break

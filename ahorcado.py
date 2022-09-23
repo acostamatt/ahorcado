@@ -3,7 +3,7 @@ from secrets import choice
 from time import sleep
 from pyfiglet import figlet_format
 from colorama import Fore, init
-from funciones_ahorcado import saltear_lineas_hasta_L12, select_dificultad, select_puntaje, select_top5_ptajes, separador, ahorcar, mostrar_estado, faltantes, validar_letra, validar_usuario
+from funciones_ahorcado import select_dificultad, select_puntaje, select_top5_ptajes, ahorcar, mostrar_estado, faltantes, validar_letra, validar_usuario
 #TITULO
 system('clear')
 init()
@@ -49,12 +49,13 @@ while True:
     palabra_a_adivinar = choice(palabras_para_adivinar)
     letras_adivinadas = []
     letras_erradas = []
-    ahorcado = ''
+    ahorcado = f'{Fore.RED}{ahorcar(vidas)}{Fore.WHITE}'
     print('Aguarde mientras seleccionamos su palabra.')
     sleep(2)
     system('clear')
     #SE LE MUESTRA AL USUARIO LA CANTIDAD DE LETRAS DE LA PALABRA
-    print('\n'*12 , '_ ' * len(palabra_a_adivinar), 'Su palabra contiene', len(palabra_a_adivinar), 'letras') 
+    print('\n'*3 + ahorcado)
+    print(' _' * len(palabra_a_adivinar), 'Su palabra contiene', len(palabra_a_adivinar), 'letras') 
     while True:
         #INGRESO Y VALIDACION DE LETRAS 
         while True:
@@ -99,7 +100,7 @@ while True:
         if vidas == 0:
             system('clear')
             perdiste += 1
-            print(ahorcado)
+            print('\n'*3 + ahorcado)
             sleep(5)
             system('clear')
             print(f'{Fore.RED}{figlet_format("GAME   OVER")}{Fore.WHITE} \nLa palabra era: {str(palabra_a_adivinar).upper()}')

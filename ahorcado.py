@@ -117,7 +117,7 @@ archivo_usuarios.close
 #SE MUESTRA AL USUARIO LOS MEJOR 5 PUNTAJES EN EL SISTEMA DE PUNTAJES
 archivo_usuarios = open('.bdd.txt', 'r')
 print(Fore.LIGHTMAGENTA_EX + '\n' + '-'*51)
-print('Top 5 mejores puntajes')
+print('Top 5 mejores puntajes'.center(51))
 print('-'*51)
 for nombre_usuario, (puntaje, fecha) in select_top5_ptajes(archivo_usuarios).items():
         print(str(nombre_usuario).rstrip('\n') + ' '*(20-len(nombre_usuario)) + ': ' + Fore.CYAN + str(puntaje).rstrip('\n') + Fore.LIGHTMAGENTA_EX + ' '*(10-len(str(puntaje))) + ': ' + Fore.CYAN + fecha + Fore.LIGHTMAGENTA_EX)

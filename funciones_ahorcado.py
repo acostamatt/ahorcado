@@ -12,7 +12,7 @@ def mostrar_estado(palabra, letras_adivinadas):
             estatus_actual += letra
         else:
              estatus_actual += "_ "
-    return estatus_actual
+    return estatus_actual.upper()
 
 def faltantes(palabra, letras_adivinadas):
     letras_faltantes = 0

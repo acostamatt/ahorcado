@@ -30,7 +30,7 @@ system('clear')
 #SE SELECCIONA LA DIFICULTAD
 palabras = open('.spanish.lst', 'r')
 while True:
-    dificultad = input('\nSeleccione la dificultad deseada:\n'+Fore.GREEN+'Facil: F\n'+Fore.YELLOW+'Normal: N\n'+Fore.RED+'Dificil: D\n\n'+Fore.WHITE+'Escriba aqui la letra que corresponda con su dificultad:  ').strip()
+    dificultad = input('\nSeleccione la dificultad deseada:\n'+Fore.GREEN+'Fácil: F\n'+Fore.YELLOW+'Normal: N\n'+Fore.RED+'Difícil: D\n\n'+Fore.WHITE+'Escriba aquí la letra que corresponda con su dificultad:  ').strip()
     system('clear')
     palabras_para_adivinar = select_dificultad(dificultad, palabras)[0]
     mensaje_dificultad = select_dificultad(dificultad, palabras)[1]

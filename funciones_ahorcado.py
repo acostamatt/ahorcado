@@ -63,16 +63,19 @@ def ahorcar(vidas):
         ahorcado = '\n'.join(lista_lineas)
     return ahorcado
 
-def select_top5_ptajes(usuarios, puntajes):
+def select_top5_ptajes(bdd):
     dic_usuarios = {}
-    for nombre_usuario, puntaje in zip(usuarios, puntajes):
-        dic_usuarios[nombre_usuario] = int(puntaje.rstrip('\n'))
+    for linea in bdd:
+        usuario = linea.split(';')[0]
+        puntaje = linea.split(';')[1]
+        fecha = linea.split(';')[2]
+        dic_usuarios[usuario] = (int(puntaje), fecha.rstrip('\n')[:16])
     puntajes_ordenados = sorted(dic_usuarios.values(), reverse=True)
     dic_top5 = {}
-    for numero in puntajes_ordenados[0:5]:
-        for nombre_usuario, puntaje in dic_usuarios.items():    
-            if puntaje == numero:
-                dic_top5[str(nombre_usuario).rstrip('\n')] = puntaje
+    for pts, fecha in puntajes_ordenados[0:5]:
+        for nombre_usuario, (puntaje, fecha) in dic_usuarios.items():    
+            if puntaje == pts:
+                dic_top5[str(nombre_usuario)] = puntaje, fecha
             if len(dic_top5) == 5:
                 break
     return dic_top5
@@ -88,12 +91,17 @@ def validar_usuario(usuario, usuarios_en_sistema):
     global mensaje
     if str(usuario).isdigit() is True:
         mensaje = '\nSu nombre de usuario debe constar de letras y opcionalmente números.'    
-    elif usuario + '\n' in usuarios_en_sistema:
-        mensaje = '\nYa se encuentra registrado ese usuario. Intente con otro nombre.'
-    elif usuario is '':
+    elif usuario == '':
         mensaje = '\nDebe ingresar un nombre de usuario.'
+    elif len(usuario) > 19:
+        mensaje = '\nSu nombre de usuario es demasiado largo. Intente con uno mas corto.'
+    elif ';' in usuario:
+        mensaje = '\nSu nombre de usuario no puede tener ";".'
     else:
         mensaje = ''
+    for linea in usuarios_en_sistema:
+        if usuario in str(linea).split(';'):
+            mensaje = '\nYa se encuentra registrado ese usuario. Intente con otro nombre.'
     return mensaje
 
 def select_dificultad(dificultad, palabras):

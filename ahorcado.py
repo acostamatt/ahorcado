@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from os import system
 from secrets import choice
 from time import sleep
@@ -8,10 +9,10 @@ from funciones_ahorcado import select_dificultad, select_puntaje, select_top5_pt
 system('clear')
 init()
 print(f'\n{Fore.MAGENTA}{figlet_format("BIENVENIDOS AL  AHORCADO")}{Fore.WHITE}')
-archivo_usuarios = open('usuarios.txt', 'a')
+archivo_usuarios = open('.bdd.txt', 'a')
 archivo_usuarios.close
 #IGRESO DE USUARIO
-archivo_usuarios = open('usuarios.txt', 'r')
+archivo_usuarios = open('.bdd.txt', 'r')
 while True:
     usuario = input('\nIngrese su nombre de usuario: ').strip()
     system('clear')
@@ -27,7 +28,7 @@ print(f'{Fore.MAGENTA}Usuario registrado correctamente.{Fore.WHITE}')
 sleep(2)
 system('clear')
 #SE SELECCIONA LA DIFICULTAD
-palabras = open('spanish.lst', 'r')
+palabras = open('.spanish.lst', 'r')
 while True:
     dificultad = input('\nSeleccione la dificultad deseada:\n'+Fore.GREEN+'Facil: F\n'+Fore.YELLOW+'Normal: N\n'+Fore.RED+'Dificil: D\n\n'+Fore.WHITE+'Escriba aqui la letra que corresponda con su dificultad:  ').strip()
     system('clear')
@@ -110,20 +111,15 @@ while True:
             print(f'Su puntaje fue: {Fore.CYAN}{puntaje_total}')
             break
 #SE AGREGA EL PUNTAJE AL SISTEMA DE USUARIOS
-archivo_usuarios = open('usuarios.txt', 'a')
-archivo_usuarios.write(usuario + '\n')
+archivo_usuarios = open('.bdd.txt', 'a')
+archivo_usuarios.write(f'{usuario};{puntaje_total};{datetime.now()}\n')
 archivo_usuarios.close
-archivo_pts = open('puntajes.txt', 'a')
-archivo_pts.write(f'{puntaje_total}\n')
-archivo_pts.close
 #SE MUESTRA AL USUARIO LOS MEJOR 5 PUNTAJES EN EL SISTEMA DE PUNTAJES
-archivo_usuarios = open('usuarios.txt', 'r')
-archivo_pts = open('puntajes.txt', 'r')
-print(Fore.LIGHTMAGENTA_EX + '\n' + '-'*30)
+archivo_usuarios = open('.bdd.txt', 'r')
+print(Fore.LIGHTMAGENTA_EX + '\n' + '-'*51)
 print('Top 5 mejores puntajes')
-print('-'*30)
-for nombre_usuario, puntaje in select_top5_ptajes(archivo_usuarios, archivo_pts).items():
-        print(str(nombre_usuario).rstrip('\n') + ' '*(20-len(nombre_usuario)) + ': ' + Fore.CYAN + str(puntaje).rstrip('\n') + Fore.LIGHTMAGENTA_EX)
-        print('-'*30)
-archivo_pts.close
+print('-'*51)
+for nombre_usuario, (puntaje, fecha) in select_top5_ptajes(archivo_usuarios).items():
+        print(str(nombre_usuario).rstrip('\n') + ' '*(20-len(nombre_usuario)) + ': ' + Fore.CYAN + str(puntaje).rstrip('\n') + Fore.LIGHTMAGENTA_EX + ' '*(10-len(str(puntaje))) + ': ' + Fore.CYAN + fecha + Fore.LIGHTMAGENTA_EX)
+        print('-'*51)
 archivo_usuarios.close

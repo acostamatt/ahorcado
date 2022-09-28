@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 from os import system
 from secrets import choice
 from time import sleep
@@ -16,12 +16,12 @@ archivo_usuarios = open('.bdd.txt', 'r')
 while True:
     usuario = input('\nIngrese su nombre de usuario: ').strip()
     system('clear')
+    print(f'\n{Fore.MAGENTA}{figlet_format("BIENVENIDOS AL  AHORCADO")}{Fore.WHITE}')
     mensaje_validacion = validar_usuario(usuario, archivo_usuarios)
     archivo_usuarios.seek(0)
     print(mensaje_validacion)
     if len(mensaje_validacion) == 0:
         break
-    print(f'\n{Fore.MAGENTA}{figlet_format("BIENVENIDOS AL  AHORCADO")}{Fore.WHITE}')
 archivo_usuarios.close
 system('clear')
 print(f'{Fore.MAGENTA}Usuario registrado correctamente.{Fore.WHITE}')

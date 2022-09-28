@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Terminal=true
+Name=AHORCADO
+Icon=/home/valchu/Pictures/download(3).jpeg
+Exec=/home/valchu/Documents/LogicayEst.deDatos/Ejercicios/ahorcado/ahorcado_git/ahorcado/./AHORCADO.sh

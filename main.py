@@ -4,7 +4,7 @@ from secrets import choice
 from time import sleep
 from pyfiglet import figlet_format
 from colorama import Fore, init
-from funciones_ahorcado import select_dificultad, select_puntaje, select_top5_ptajes, ahorcar, mostrar_estado, faltantes, validar_letra, validar_usuario
+from funciones import select_dificultad, select_puntaje, select_top5_ptajes, ahorcar, mostrar_estado, faltantes, validar_letra, validar_usuario
 #TITULO
 system('clear')
 init()
